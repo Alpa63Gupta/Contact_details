@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Menu | Sweet Shop POS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="transfer-layout">
+      <section class="panel transfer-shell">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Admin Menu</p>
+            <h1>Manage Items</h1>
+          </div>
+          <a
+            class="ghost-button transfer-link"
+            href="#"
+            onclick="if (window.history.length > 1) { window.history.back(); } else { window.location.href = 'index.html'; } return false;"
+          >Back To Dashboard</a>
+        </div>
+        <p class="muted">Add new items and their details to the shop catalog.</p>
+
+        <form id="menuCategoryForm" class="stack">
+          <div class="grid two">
+            <label>
+              New Category
+              <input id="menuCategoryName" type="text" placeholder="Namkeen" required />
+              <span id="menuCategoryNameStatus" class="field-status" aria-live="polite"></span>
+            </label>
+            <div class="receipt-actions expense-actions">
+              <button class="button accent" type="submit">Add Category</button>
+            </div>
+          </div>
+        </form>
+
+        <form id="menuItemForm" class="stack">
+          <input id="menuItemId" type="hidden" />
+          <div class="grid two">
+            <label>
+              Item Name
+              <input id="menuItemName" type="text" placeholder="Milk Cake" required />
+              <span id="menuItemNameStatus" class="field-status" aria-live="polite"></span>
+            </label>
+            <label>
+              Hindi Item Name
+              <input id="menuItemHindiName" type="text" placeholder="मिल्क केक" />
+            </label>
+          </div>
+          <div class="grid two">
+            <label>
+              Category
+              <input id="menuItemCategory" type="text" list="menuCategoryOptions" placeholder="Sweets" required />
+              <span id="menuItemCategoryStatus" class="field-status" aria-live="polite"></span>
+            </label>
+            <label>
+              Token Department
+              <input id="menuItemTokenDepartment" type="text" placeholder="Sweets Counter" required />
+            </label>
+          </div>
+          <datalist id="menuCategoryOptions"></datalist>
+          <div class="grid three admin-form-grid">
+            <label>
+              Unit
+              <input id="menuItemUnit" type="text" placeholder="kg / piece / box" required />
+            </label>
+            <label>
+              Price
+              <input id="menuItemPrice" type="number" min="0.01" step="0.01" placeholder="0.00" required />
+            </label>
+            <label>
+              Opening Stock
+              <input id="menuItemStock" type="number" min="0" step="0.01" placeholder="0" required />
+            </label>
+          </div>
+          <label>
+            Minimum Stock Limit
+            <input id="menuItemMinStock" type="number" min="0" step="0.01" placeholder="5" required />
+          </label>
+          <div class="receipt-actions expense-actions">
+            <button id="menuItemSubmit" class="button accent" type="submit">Add Item</button>
+            <button id="menuItemCancel" class="ghost-button" type="button" hidden>Cancel Edit</button>
+          </div>
+        </form>
+
+        <div id="menuSummary" class="summary transfer-summary"></div>
+        <form id="menuSearchForm" class="item-card-search" role="search">
+          <label>
+            Search Items
+            <input id="menuSearchInput" type="search" placeholder="Search item cards..." autocomplete="off" />
+          </label>
+          <button id="menuSearchButton" class="button" type="submit">Search</button>
+          <button id="menuSearchClear" class="ghost-button" type="button" hidden>Clear</button>
+        </form>
+        <div id="menuList" class="history-list transfer-page-list"></div>
+      </section>
+    </div>
+
+    <script src="db.js"></script>
+    <script src="admin-menu.js"></script>
+  </body>
+</html>

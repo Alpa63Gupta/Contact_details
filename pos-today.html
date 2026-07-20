@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Today At A Glance | Ramesh sweets</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="transfer-layout report-page">
+      <section class="panel transfer-shell report-shell">
+        <div class="section-header report-toolbar">
+          <div>
+            <p class="eyebrow">Owner Dashboard</p>
+            <h1>Today At A Glance</h1>
+          </div>
+          <div class="receipt-actions expense-actions report-actions">
+            <a class="ghost-button transfer-link" href="index.html">Back To Dashboard</a>
+          </div>
+        </div>
+
+        <div id="todayStats" class="stats report-stats"></div>
+
+        <section class="catalog-section report-section">
+          <div class="section-header">
+            <h2>Payment Breakdown</h2>
+          </div>
+          <div id="todayPayments" class="admin-grid"></div>
+        </section>
+
+        <section class="catalog-section report-section">
+          <div class="section-header">
+            <h2>Top Items Today</h2>
+          </div>
+          <div id="todayItems" class="report-table-wrap"></div>
+        </section>
+      </section>
+    </div>
+
+    <script src="db.js"></script>
+    <script src="pos-today.js"></script>
+  </body>
+</html>
+

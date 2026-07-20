@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recent Orders | Ramesh sweets</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="transfer-layout report-page">
+      <section class="panel transfer-shell report-shell">
+        <div class="section-header report-toolbar">
+          <div>
+            <p class="eyebrow">POS Dashboard</p>
+            <h1>Recent Orders</h1>
+          </div>
+          <div class="receipt-actions expense-actions report-actions">
+            <a class="ghost-button transfer-link" href="index.html">Back To POS</a>
+          </div>
+        </div>
+
+        <form id="recentOrderFilters" class="report-filter-bar">
+          <label>
+            Filter By Date
+            <input id="recentOrdersDateFilter" type="date" />
+          </label>
+          <button class="button" type="submit">Show Orders</button>
+          <button id="recentOrdersToday" class="ghost-button" type="button">Today</button>
+        </form>
+
+        <div id="orderHistory" class="history-list"></div>
+      </section>
+    </div>
+
+    <dialog id="recentOrderPrintDialog" class="receipt-dialog">
+      <article id="recentOrderPrintContent" class="receipt"></article>
+      <div class="receipt-actions">
+        <button id="recentOrderPrintNow" class="button accent" type="button">Print Receipt</button>
+        <button id="recentOrderPrintClose" class="ghost-button" type="button">Close</button>
+      </div>
+    </dialog>
+
+    <script src="db.js"></script>
+    <script src="pos-recent-orders.js"></script>
+  </body>
+</html>

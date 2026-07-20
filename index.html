@@ -1,0 +1,566 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sweet Shop POS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <section id="loginScreen" class="login-screen">
+      <div class="login-card">
+        <p class="eyebrow">Ramesh sweets</p>
+        <h1>Ramesh sweets</h1>
+        <p class="muted">Choose how you want to enter the system.</p>
+        <div id="loginMessage" class="login-message" hidden></div>
+        <div class="login-actions">
+          <section class="login-option">
+            <h2>Owner</h2>
+            <label>
+              Password
+              <input id="ownerPassword" type="password" placeholder="Enter owner password" />
+            </label>
+            <button id="loginOwner" class="button accent" type="button">Login As Owner</button>
+          </section>
+          <section class="login-option">
+            <h2>Admin</h2>
+            <label>
+              Password
+              <input id="adminPassword" type="password" placeholder="Enter admin password" />
+            </label>
+            <button id="loginAdmin" class="button accent" type="button">Login As Admin</button>
+          </section>
+          <section class="login-option">
+            <h2>Cashier</h2>
+            <label>
+              Outlet
+              <select id="cashierOutletSelect"></select>
+            </label>
+            <label>
+              Password
+              <input id="cashierPassword" type="password" placeholder="Enter cashier password" />
+            </label>
+            <button id="loginCashier" class="ghost-button login-ghost" type="button">Login As Cashier</button>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <div id="appLayout" class="layout">
+      <aside class="sidebar">
+        <div>
+          <p class="eyebrow">Counter POS</p>
+          <div class="dashboard-title-stack">
+            <h1>Ramesh sweets</h1>
+            <div class="dashboard-actions">
+              <button class="ghost-button theme-toggle-button" type="button" data-theme-toggle>Dark Mode</button>
+              <button id="logoutButton" class="ghost-button" type="button">Logout</button>
+            </div>
+          </div>
+          <p id="userRole" class="pill role-pill"></p>
+          <p id="posOutletName" class="pill role-pill outlet-pill"></p>
+          <button id="posBackDashboard" class="ghost-button" type="button" hidden>Back To Dashboard</button>
+        </div>
+
+        <section class="panel">
+          <div class="panel-header">
+            <h2>Navigation</h2>
+            <button id="posSidebarToggle" class="ghost-button quick-toggle-button" type="button" aria-label="Toggle quick actions">Ã—</button>
+          </div>
+            <div class="sidebar-categories">
+              <button id="posNavRecentOrders" class="filter-button" type="button">Recent Orders</button>
+              <button id="posLowStock" class="filter-button" type="button">Low Stock</button>
+              <button id="posExpense" class="filter-button" type="button">Expense</button>
+              <button id="posReports" class="filter-button" type="button">Reports</button>
+              <button id="posStockTransfer" class="filter-button notify-button" type="button">
+                <span>Stock Receive</span>
+                <span id="posStockTransferCount" class="notification-pill" hidden>0</span>
+              </button>
+              <button id="posStockReceiveHistory" class="filter-button" type="button">Stock Receive History</button>
+            </div>
+          </section>
+
+      </aside>
+
+      <main class="main">
+        <section class="hero">
+          <div>
+            <p class="eyebrow">Counter Catalog</p>
+            <h2>Quick Billing</h2>
+          </div>
+          <div class="search-wrap">
+            <label class="search">
+              <span>Search catalog</span>
+              <input id="searchInput" type="search" placeholder="Search sweets, snacks, boxes..." />
+            </label>
+          </div>
+        </section>
+
+        <section class="catalog-section">
+          <div class="section-header">
+            <h2>Catalog</h2>
+            <div class="filter-pills" id="categoryFilters"></div>
+          </div>
+          <div id="catalog" class="catalog"></div>
+        </section>
+      </main>
+
+      <aside class="cart-pane">
+        <section class="panel bill-panel">
+          <div class="panel-header">
+            <h2>Current Bill</h2>
+            <button id="clearCart" class="ghost-button" type="button">Clear</button>
+          </div>
+
+          <label>
+            Customer name
+            <input id="customerName" type="text" placeholder="Walk-in customer" />
+          </label>
+
+          <div id="cartItems" class="cart-items empty-state">
+            Add products to start billing.
+          </div>
+
+          <div class="stack totals-stack">
+            <div class="grid two">
+              <label>
+                Discount
+                <input id="discount" type="number" min="0" step="0.01" value="0" />
+              </label>
+              <label>
+                Tax %
+                <input id="taxRate" type="number" min="0" step="0.01" value="0" />
+              </label>
+            </div>
+
+            <label>
+              Payment method
+              <select id="paymentMethod">
+                <option value="Cash">Cash</option>
+                <option value="Card">Card</option>
+                <option value="UPI">UPI</option>
+                <option value="Credit">Credit</option>
+                <option value="Split Bill">Split Bill</option>
+              </select>
+            </label>
+
+            <div id="splitPaymentSection" class="summary" hidden>
+              <div class="panel-header">
+                <h3>Split Bill</h3>
+              </div>
+              <div class="grid two">
+                <label>
+                  Cash
+                  <input id="splitCash" type="number" min="0" step="0.01" value="0" />
+                </label>
+                <label>
+                  Card
+                  <input id="splitCard" type="number" min="0" step="0.01" value="0" />
+                </label>
+                <label>
+                  UPI
+                  <input id="splitUpi" type="number" min="0" step="0.01" value="0" />
+                </label>
+                <label>
+                  Credit
+                  <input id="splitCredit" type="number" min="0" step="0.01" value="0" />
+                </label>
+              </div>
+              <div id="splitPaymentSummary" class="summary"></div>
+            </div>
+
+            <div class="summary" id="summary"></div>
+            <button id="checkoutButton" class="button accent" type="button">Complete Sale</button>
+          </div>
+        </section>
+
+      </aside>
+    </div>
+
+    <div id="adminLayout" class="layout admin-layout">
+      <aside class="sidebar">
+        <div>
+          <p class="eyebrow">Admin Dashboard</p>
+          <div class="dashboard-title-stack">
+            <h1>Ramesh sweets</h1>
+            <div class="dashboard-actions">
+              <button class="ghost-button theme-toggle-button" type="button" data-theme-toggle>Dark Mode</button>
+              <button id="adminLogoutButton" class="ghost-button" type="button">Logout</button>
+            </div>
+          </div>
+        </div>
+
+          <section class="panel">
+            <div class="panel-header">
+              <h2>Quick Actions</h2>
+            </div>
+            <div class="sidebar-categories">
+              <button id="adminMenu" class="filter-button" type="button">Menu</button>
+              <button id="adminStockChecking" class="filter-button" type="button">Stock Checking</button>
+              <button id="adminLowStock" class="filter-button" type="button">Low Stock</button>
+              <button id="adminStockTransfer" class="filter-button" type="button">Stock Transfer</button>
+              <button id="adminLedger" class="filter-button" type="button">Ledger</button>
+              <button id="adminBackup" class="filter-button" type="button">Backup Database</button>
+              <button id="adminRestore" class="filter-button" type="button">Restore Database</button>
+              <input id="adminRestoreFile" type="file" accept=".sql,.txt" hidden />
+            </div>
+          </section>
+
+          <section class="panel outlet-switch-panel">
+            <div class="panel-header">
+              <h2>Outlet</h2>
+            </div>
+            <label>
+              Active Outlet
+              <select id="adminOutletSelect"></select>
+            </label>
+            <div class="receipt-actions expense-actions">
+              <input id="adminOutletName" type="text" placeholder="New outlet name" />
+              <button id="adminAddOutlet" class="ghost-button" type="button">Add Outlet</button>
+            </div>
+          </section>
+        </aside>
+
+        <main class="main">
+          <section class="panel">
+            <div class="panel-header">
+              <h2>Network Access</h2>
+            </div>
+            <div id="serverInfo" class="summary"></div>
+          </section>
+
+          <section class="catalog-section">
+            <div class="section-header">
+              <h2>Stock Transfer Entries</h2>
+            </div>
+            <label>
+              Filter By Date
+              <input id="adminDateFilter" type="date" />
+            </label>
+            <div id="adminOrders" class="history-list"></div>
+          </section>
+      </main>
+    </div>
+
+    <div id="ownerLayout" class="layout admin-layout">
+      <aside class="sidebar">
+        <div>
+          <p class="eyebrow">Owner Dashboard</p>
+          <div class="dashboard-title-stack">
+            <h1>Ramesh sweets</h1>
+            <div class="dashboard-actions">
+              <button class="ghost-button theme-toggle-button" type="button" data-theme-toggle>Dark Mode</button>
+              <button id="ownerLogoutButton" class="ghost-button" type="button">Logout</button>
+            </div>
+          </div>
+        </div>
+
+        <section class="panel">
+          <div class="panel-header">
+            <h2>Quick Actions</h2>
+          </div>
+          <div class="sidebar-categories">
+            <button id="ownerViewPos" class="filter-button" type="button">Open POS</button>
+            <button id="ownerTodayGlance" class="filter-button" type="button">Today At A Glance</button>
+            <button id="ownerRecentBillEdit" class="filter-button" type="button">Recent Bill Edit</button>
+            <button id="ownerEmployeesButton" class="filter-button" type="button">Employee Access</button>
+            <button id="ownerMenu" class="filter-button" type="button">Menu</button>
+            <button id="ownerLowStock" class="filter-button" type="button">Low Stock</button>
+            <button id="ownerStockTransfer" class="filter-button" type="button">Stock Transfer</button>
+            <button id="ownerExpense" class="filter-button" type="button">Expense</button>
+            <button id="ownerStockHistory" class="filter-button" type="button">Stock Receive History</button>
+            <button id="ownerReports" class="filter-button" type="button">Reports</button>
+            <button id="ownerLedger" class="filter-button" type="button">Ledger</button>
+            <button id="ownerTodayReport" class="filter-button" type="button">Today All Report</button>
+            <button id="ownerBackup" class="filter-button" type="button">Backup Database</button>
+            <button id="ownerRestore" class="filter-button" type="button">Restore Database</button>
+            <input id="ownerRestoreFile" type="file" accept=".sql,.txt" hidden />
+          </div>
+        </section>
+
+        <section class="panel outlet-switch-panel">
+          <div class="panel-header">
+            <h2>Outlet</h2>
+          </div>
+          <label>
+            Active Outlet
+            <select id="ownerOutletSelect"></select>
+          </label>
+          <div class="receipt-actions expense-actions">
+            <input id="ownerOutletName" type="text" placeholder="New outlet name" />
+            <button id="ownerAddOutlet" class="ghost-button" type="button">Add Outlet</button>
+          </div>
+        </section>
+      </aside>
+
+      <main class="main">
+        <section class="panel owner-section-picker">
+          <div class="panel-header">
+            <h2>Owner Views</h2>
+          </div>
+          <div class="owner-view-buttons">
+            <button class="filter-button active" type="button" data-owner-section-button="snapshot">Snapshot</button>
+            <button class="filter-button" type="button" data-owner-section-button="payments">Payment Breakdown</button>
+            <button class="filter-button" type="button" data-owner-section-button="stock">Stock Movement</button>
+            <button class="filter-button" type="button" data-owner-section-button="reports">Reports</button>
+            <button class="filter-button" type="button" data-owner-section-button="topItems">Top Selling Items</button>
+            <button class="filter-button" type="button" data-owner-section-button="itemSales">Item Sales Report</button>
+            <button class="filter-button" type="button" data-owner-section-button="recentBills">Recent Bill Edit</button>
+            <button class="filter-button" type="button" data-owner-section-button="network">Network Access</button>
+          </div>
+        </section>
+
+        <section class="panel owner-dashboard-section" data-owner-section="network" hidden>
+          <div class="panel-header">
+            <h2>Network Access</h2>
+          </div>
+          <div id="ownerServerInfo" class="summary"></div>
+        </section>
+
+        <section class="hero owner-dashboard-section" data-owner-section="snapshot">
+          <div>
+            <p class="eyebrow">Owner Snapshot</p>
+            <label class="search">
+              <span>Filter by date</span>
+              <input id="ownerDateFilter" type="date" />
+            </label>
+            <div class="stats" id="ownerStats"></div>
+          </div>
+        </section>
+
+        <section class="catalog-section owner-dashboard-section" data-owner-section="payments" hidden>
+          <div class="section-header">
+            <h2>Payment Breakdown</h2>
+          </div>
+          <div id="ownerPayments" class="admin-grid"></div>
+        </section>
+
+        <section class="catalog-section owner-dashboard-section" data-owner-section="stock" hidden>
+          <div class="section-header">
+            <h2>Stock Movement</h2>
+          </div>
+          <div id="ownerTransfers" class="admin-grid"></div>
+        </section>
+
+        <section id="ownerReportsSection" class="catalog-section owner-dashboard-section" data-owner-section="reports" hidden>
+          <div class="section-header">
+            <h2>Reports</h2>
+          </div>
+          <div id="ownerReportSummary" class="admin-grid"></div>
+        </section>
+
+        <section class="catalog-section owner-dashboard-section" data-owner-section="topItems" hidden>
+          <div class="section-header">
+            <h2>Top Selling Items</h2>
+          </div>
+          <div id="ownerTopItems" class="history-list"></div>
+        </section>
+
+        <section class="catalog-section owner-dashboard-section" data-owner-section="itemSales" hidden>
+          <div class="section-header">
+            <h2>Item Sales Report</h2>
+          </div>
+          <div id="ownerItemReport" class="report-table-wrap"></div>
+        </section>
+        <section class="catalog-section owner-dashboard-section" data-owner-section="recentBills" hidden>
+          <div class="section-header">
+            <div>
+              <h2>Recent Bill Edit</h2>
+              <p class="muted">Owner only bill edit and reprint list.</p>
+            </div>
+          </div>
+          <div id="ownerOrders" class="history-list"></div>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="receiptDialog" class="receipt-dialog">
+      <article id="receiptContent" class="receipt"></article>
+      <div class="receipt-actions">
+        <button id="printReceipt" class="button accent" type="button">Print Receipt</button>
+        <button id="printToken" class="button" type="button">Print Token</button>
+        <button id="closeReceipt" class="ghost-button" type="button">Close</button>
+      </div>
+    </dialog>
+
+    <dialog id="confirmationDialog" class="receipt-dialog confirmation-dialog">
+      <article id="confirmationContent" class="receipt confirmation-content"></article>
+      <div class="receipt-actions">
+        <button id="confirmationPrint" class="button accent" type="button">Print Receipt</button>
+        <button id="confirmationPrintToken" class="button" type="button">Print Token</button>
+        <button id="confirmationClose" class="ghost-button" type="button">Back To POS</button>
+      </div>
+    </dialog>
+
+    <dialog id="addItemDialog" class="receipt-dialog item-dialog">
+      <form id="addItemForm" class="receipt item-form" method="dialog">
+        <div class="panel-header">
+          <h2>Add Item</h2>
+          <button id="cancelAddItem" class="ghost-button" type="button">Close</button>
+        </div>
+        <p id="selectedProductText" class="muted"></p>
+        <div class="grid two">
+          <label>
+            Amount
+            <input id="dialogAmount" type="number" min="0.01" step="0.01" required />
+          </label>
+          <label>
+            Quantity
+            <input id="dialogQuantity" type="number" min="0.0001" step="0.0001" required />
+          </label>
+        </div>
+        <div class="summary">
+          <div class="summary-row">
+            <span>Calculated quantity</span>
+            <strong id="calculatedQuantity">0</strong>
+          </div>
+        </div>
+        <div class="receipt-actions">
+          <button class="button accent" type="submit">Add To Bill</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="stockTransferDialog" class="receipt-dialog item-dialog">
+      <form id="stockTransferForm" class="receipt item-form" method="dialog">
+        <div class="panel-header">
+          <h2>Stock Transfer</h2>
+          <button id="cancelStockTransfer" class="ghost-button" type="button">Close</button>
+        </div>
+        <label>
+          Item
+          <input id="stockTransferItem" type="text" list="stockTransferItemList" placeholder="Type item name" autocomplete="off" />
+          <datalist id="stockTransferItemList"></datalist>
+        </label>
+        <label>
+          Transfer Type
+          <select id="stockTransferType">
+            <option value="in">Item In</option>
+            <option value="out">Item Out</option>
+          </select>
+        </label>
+        <label>
+          Quantity
+          <input id="stockTransferQuantity" type="number" min="0.01" step="0.01" required />
+        </label>
+        <label id="stockTransferShelfLifeWrap">
+          Shelf Life
+          <input id="stockTransferShelfLife" type="text" placeholder="Example: 2 days / 12 hours" />
+        </label>
+        <div class="receipt-actions">
+          <button class="button accent" type="submit">Send Request</button>
+        </div>
+        <div class="panel-header">
+          <h3>Transfer Entries</h3>
+        </div>
+        <label>
+          Filter By Date
+          <input id="stockTransferDateFilter" type="date" />
+        </label>
+        <div id="stockTransferHistory" class="history-list transfer-page-list"></div>
+      </form>
+    </dialog>
+
+    <dialog id="ownerEditOrderDialog" class="receipt-dialog item-dialog">
+      <form id="ownerEditOrderForm" class="receipt item-form" method="dialog">
+        <div class="panel-header">
+          <h2>Edit Bill</h2>
+          <button id="ownerEditOrderCancel" class="ghost-button" type="button">Close</button>
+        </div>
+        <input id="ownerEditOrderInvoiceId" type="hidden" />
+        <label>
+          Customer Name
+          <input id="ownerEditCustomerName" type="text" />
+        </label>
+        <label>
+          Payment Method
+          <select id="ownerEditPaymentMethod">
+            <option value="Cash">Cash</option>
+            <option value="Card">Card</option>
+            <option value="UPI">UPI</option>
+            <option value="Credit">Credit</option>
+            <option value="Split Bill">Split Bill</option>
+          </select>
+        </label>
+        <div class="grid two">
+          <label>
+            Discount
+            <input id="ownerEditDiscount" type="number" min="0" step="0.01" />
+          </label>
+          <label>
+            Tax %
+            <input id="ownerEditTaxRate" type="number" min="0" step="0.01" />
+          </label>
+        </div>
+        <div id="ownerEditOrderSummary" class="summary"></div>
+        <div class="receipt-actions">
+          <button id="ownerDeleteBill" class="ghost-button danger-button" type="button">Delete Bill</button>
+          <button class="button accent" type="submit">Save Bill</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="ownerEmployeeDialog" class="receipt-dialog item-dialog">
+      <form id="ownerEmployeeForm" class="receipt item-form" method="dialog">
+        <div class="panel-header">
+          <h2>Employee Access</h2>
+          <button id="ownerEmployeeDialogClose" class="ghost-button" type="button">Close</button>
+        </div>
+        <input id="ownerEmployeeUsername" type="hidden" />
+        <div class="grid three admin-form-grid">
+          <label>
+            Name
+            <input id="ownerEmployeeName" type="text" placeholder="Aman" required />
+          </label>
+          <label>
+            Access
+            <select id="ownerEmployeeAccess">
+              <option value="Cashier">Cashier</option>
+              <option value="Admin">Admin</option>
+              <option value="Both">Both</option>
+            </select>
+          </label>
+          <label>
+            Password
+            <input id="ownerEmployeePassword" type="password" placeholder="Enter password" required />
+          </label>
+        </div>
+        <div class="receipt-actions expense-actions">
+          <button id="ownerEmployeeSubmit" class="button accent" type="submit">Add Employee</button>
+          <button id="ownerEmployeeCancelEdit" class="ghost-button" type="button" hidden>Cancel Edit</button>
+        </div>
+        <div id="ownerEmployees" class="history-list"></div>
+      </form>
+    </dialog>
+
+    <dialog id="ownerTodayReportDialog" class="receipt-dialog item-dialog">
+      <form id="ownerTodayReportForm" class="receipt item-form" method="dialog">
+        <div class="panel-header">
+          <h2>Today All Report PDF</h2>
+          <button id="ownerTodayReportCancel" class="ghost-button" type="button">Close</button>
+        </div>
+        <label>
+          Report Date
+          <input id="ownerTodayReportDate" type="date" required />
+        </label>
+        <div class="receipt-actions expense-actions">
+          <button id="ownerTodayReportToday" class="ghost-button" type="button">Today</button>
+          <button class="button accent" type="submit">Make PDF</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="db.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
+
+
+
+

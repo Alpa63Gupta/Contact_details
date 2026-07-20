@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ledger Profiles | Sweet Shop POS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="transfer-layout">
+      <section class="panel transfer-shell report-shell">
+        <div class="section-header">
+          <div>
+            <p id="ledgerProfileEyebrow" class="eyebrow">Ledger Profiles</p>
+            <h1 id="ledgerProfileTitle">Ledger Profiles</h1>
+          </div>
+          <div class="receipt-actions expense-actions report-actions">
+            <button id="ledgerProfilePdf" class="button accent" type="button" hidden>Make PDF</button>
+            <a class="ghost-button transfer-link" href="ledger.html">Back To Ledger</a>
+          </div>
+        </div>
+
+        <div id="ledgerProfileSummary" class="stats report-stats"></div>
+
+        <div id="ledgerProfileList" class="ledger-party-grid"></div>
+      </section>
+    </div>
+
+    <dialog id="ledgerPdfDialog" class="receipt-dialog item-dialog">
+      <form id="ledgerPdfForm" class="receipt item-form" method="dialog">
+        <div class="panel-header">
+          <h2>PDF Date Range</h2>
+          <button id="ledgerPdfCancel" class="ghost-button" type="button">Close</button>
+        </div>
+        <div class="grid two">
+          <label>
+            From Date
+            <input id="ledgerPdfFromDate" type="date" required />
+          </label>
+          <label>
+            To Date
+            <input id="ledgerPdfToDate" type="date" required />
+          </label>
+        </div>
+        <div class="receipt-actions expense-actions">
+          <button id="ledgerPdfToday" class="ghost-button" type="button">Today</button>
+          <button class="button accent" type="submit">Make PDF</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="db.js"></script>
+    <script src="ledger-parties.js"></script>
+  </body>
+</html>

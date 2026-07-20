@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Today All Report | Ramesh sweets</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="transfer-layout report-page">
+      <section class="panel transfer-shell report-shell">
+        <div class="section-header report-toolbar">
+          <div>
+            <p class="eyebrow">Owner Dashboard</p>
+            <h1>Today All Report</h1>
+            <p id="todayReportDate" class="muted"></p>
+          </div>
+          <div class="receipt-actions expense-actions report-actions">
+            <button id="downloadTodayReportPdf" class="button accent" type="button">Download PDF</button>
+            <button id="printTodayReport" class="ghost-button" type="button">Print</button>
+            <a
+              class="ghost-button transfer-link"
+              href="#"
+              onclick="if (window.history.length > 1) { window.history.back(); } else { window.location.href = 'index.html'; } return false;"
+            >Back To Owner</a>
+          </div>
+        </div>
+
+        <div id="todayReportSummary" class="stats report-stats"></div>
+
+        <section class="catalog-section report-section">
+          <div class="section-header">
+            <h2>Total Sale Breakdown</h2>
+          </div>
+          <div id="todaySaleBreakdown" class="admin-grid"></div>
+        </section>
+
+        <section class="catalog-section report-section">
+          <div class="section-header">
+            <h2>Payment Breakdown</h2>
+          </div>
+          <div id="todayPaymentBreakdown" class="admin-grid"></div>
+        </section>
+
+        <section class="catalog-section report-section">
+          <div class="section-header">
+            <h2>Today Item Quantity Sold</h2>
+          </div>
+          <div id="todayItemSales" class="report-table-wrap"></div>
+        </section>
+
+        <section class="catalog-section report-section">
+          <div class="section-header">
+            <h2>Today Expense Details</h2>
+          </div>
+          <div id="todayExpenses" class="report-table-wrap"></div>
+        </section>
+
+        <section class="catalog-section report-section">
+          <div class="section-header">
+            <h2>Today Ledger Entries</h2>
+          </div>
+          <div id="todayLedgerEntries" class="report-table-wrap"></div>
+        </section>
+
+        <section class="catalog-section report-section">
+          <div class="section-header">
+            <h2>Today Stock Transfer Entries</h2>
+          </div>
+          <div id="todayStockTransfers" class="report-table-wrap"></div>
+        </section>
+      </section>
+    </div>
+
+    <script src="db.js"></script>
+    <script src="today-report.js"></script>
+  </body>
+</html>

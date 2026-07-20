@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stock Checking | Sweet Shop POS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="transfer-layout report-page">
+      <section class="panel transfer-shell report-shell">
+        <div class="section-header report-toolbar">
+          <div>
+            <p class="eyebrow">Admin Dashboard</p>
+            <h1>Stock Checking</h1>
+            <p id="stockCheckingOutlet" class="muted"></p>
+          </div>
+          <div class="receipt-actions expense-actions report-actions">
+            <button id="startStockChecking" class="button accent" type="button">Start Checking</button>
+            <button id="downloadStockAvailableList" class="button" type="button">Stock Available List</button>
+            <button id="printStockChecking" class="ghost-button" type="button">Print</button>
+            <a
+              class="ghost-button transfer-link"
+              href="#"
+              onclick="if (window.history.length > 1) { window.history.back(); } else { window.location.href = 'index.html'; } return false;"
+            >Back To Dashboard</a>
+          </div>
+        </div>
+
+        <div id="stockCheckingSummary" class="stats report-stats"></div>
+
+        <section class="catalog-section report-section">
+          <div class="section-header">
+            <h2>Total Stock Amount</h2>
+          </div>
+          <div id="stockCheckingTotal" class="history-list"></div>
+        </section>
+
+        <section class="catalog-section report-section">
+          <div class="section-header">
+            <h2>Item Wise Stock Value</h2>
+          </div>
+          <div id="stockCheckingItems" class="report-table-wrap"></div>
+        </section>
+      </section>
+    </div>
+
+    <script src="db.js"></script>
+    <script src="stock-checking.js"></script>
+  </body>
+</html>

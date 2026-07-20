@@ -1,0 +1,8 @@
+node_modules
+backups
+daemon
+server.out.log
+server.err.log
+.env
+release
+npm-debug.log

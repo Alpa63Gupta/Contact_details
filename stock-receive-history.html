@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stock Receive History | Sweet Shop POS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="transfer-layout">
+      <section class="panel transfer-shell">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">POS History</p>
+            <h1>Stock Receive History</h1>
+          </div>
+          <a
+            class="ghost-button transfer-link"
+            href="#"
+            onclick="if (window.history.length > 1) { window.history.back(); } else { window.location.href = 'index.html'; } return false;"
+          >Back To POS</a>
+        </div>
+
+        <p class="muted">View item in and item out entries date-wise.</p>
+
+        <div class="receipt-actions expense-actions">
+          <button id="resetAllStockButton" class="ghost-button" type="button">Make All Stock 0</button>
+          <button id="downloadStockSheetButton" class="button accent" type="button">Download Stock Sheet</button>
+        </div>
+
+        <div class="grid two">
+          <label>
+            Filter By Date
+            <input id="stockHistoryDateFilter" type="date" />
+          </label>
+          <div id="stockHistorySummary" class="summary transfer-summary"></div>
+        </div>
+
+        <div id="stockHistoryList" class="history-list transfer-page-list"></div>
+      </section>
+    </div>
+
+    <script src="db.js"></script>
+    <script src="stock-receive-history.js"></script>
+  </body>
+</html>

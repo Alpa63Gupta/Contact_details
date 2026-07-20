@@ -1,0 +1,34 @@
+services:
+  postgres:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: sweet_shop_pos
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  app:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    environment:
+      PORT: 3000
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/sweet_shop_pos
+      SESSION_SECRET: change-this-session-secret
+      ADMIN_PASSWORD: admin123
+      CASHIER_PASSWORD: cashier123
+      AUTO_DAILY_BACKUP_TIME: 23:00
+      BACKUP_RETENTION_DAYS: 14
+      PG_BIN_DIR: /usr/bin
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./backups:/app/backups
+
+volumes:
+  postgres_data:

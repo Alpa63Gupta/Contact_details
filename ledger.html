@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ledger | Sweet Shop POS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="transfer-layout report-page ledger-dashboard-page">
+      <section class="panel transfer-shell report-shell">
+        <div class="section-header report-toolbar ledger-hero-toolbar">
+          <div>
+            <p class="eyebrow">Admin Ledger</p>
+            <h1>Vendor & Employee Ledger</h1>
+            <p class="muted ledger-hero-subtitle">Track payments, attendance, employee salary and party balances in one dashboard.</p>
+          </div>
+        </div>
+
+        <nav class="ledger-nav" aria-label="Ledger navigation">
+          <button id="ledgerEntriesNav" class="ghost-button active" type="button">Entries</button>
+          <button id="ledgerAttendanceNav" class="ghost-button" type="button">Attendance</button>
+          <button id="ledgerAllVendors" class="ghost-button" type="button">All Vendors</button>
+          <button id="ledgerAllEmployees" class="ghost-button" type="button">All Employees</button>
+          <button id="printLedger" class="button accent" type="button">Print Ledger</button>
+          <a
+            class="ghost-button transfer-link"
+            href="#"
+            onclick="if (window.history.length > 1) { window.history.back(); } else { window.location.href = 'index.html'; } return false;"
+          >Back To Dashboard</a>
+        </nav>
+
+        <section id="ledgerEntriesPage" class="ledger-page-panel" data-ledger-page="entries">
+          <form id="ledgerEntryForm" class="stack ledger-entry-form">
+            <input id="ledgerEntryId" type="hidden" />
+            <div class="grid three admin-form-grid">
+              <label>
+                Account Type
+                <select id="ledgerPartyType">
+                  <option value="Vendor">Vendor</option>
+                  <option value="Employee">Employee</option>
+                </select>
+              </label>
+              <label>
+                Name
+                <input id="ledgerPartyName" type="text" placeholder="Vendor or employee name" required />
+              </label>
+              <label>
+                Entry Type
+                <select id="ledgerEntryType">
+                  <option value="Debit">Debit / Paid</option>
+                  <option value="Credit">Credit / Payable</option>
+                </select>
+              </label>
+            </div>
+            <div class="grid three admin-form-grid">
+              <label>
+                Amount
+                <input id="ledgerAmount" type="number" min="0.01" step="0.01" placeholder="0.00" required />
+              </label>
+              <label>
+                Date
+                <input id="ledgerEntryDate" type="date" required />
+              </label>
+              <label>
+                Notes
+                <input id="ledgerNotes" type="text" placeholder="Salary, purchase, advance..." />
+              </label>
+            </div>
+            <div class="receipt-actions expense-actions">
+              <button id="ledgerSubmit" class="button accent" type="submit">Add Entry</button>
+              <button id="ledgerCancelEdit" class="ghost-button" type="button" hidden>Cancel Edit</button>
+            </div>
+          </form>
+
+          <form id="ledgerFilters" class="report-filter-bar">
+            <label>
+              From Date
+              <input id="ledgerFromDate" type="date" />
+            </label>
+            <label>
+              To Date
+              <input id="ledgerToDate" type="date" />
+            </label>
+            <button class="button" type="submit">Show Ledger</button>
+            <button id="ledgerToday" class="ghost-button" type="button">Today</button>
+          </form>
+
+          <div id="ledgerSummary" class="stats report-stats"></div>
+
+          <section class="catalog-section report-section">
+            <div class="section-header">
+              <h2>Vendor & Employee Entries</h2>
+            </div>
+            <div id="ledgerEntries" class="report-table-wrap"></div>
+          </section>
+        </section>
+
+        <section id="ledgerAttendancePage" class="catalog-section report-section" data-ledger-page="attendance" hidden>
+          <div class="section-header">
+            <h2>Employee Daily Attendance</h2>
+            <button id="createEmployeeProfile" class="button accent" type="button" hidden>Create Employee</button>
+          </div>
+          <form id="employeeProfileForm" class="stack ledger-entry-form" hidden>
+            <input id="employeeProfileId" type="hidden" />
+            <div class="grid three admin-form-grid">
+              <label>
+                Employee Name
+                <input id="employeeProfileName" type="text" placeholder="Employee name" required />
+              </label>
+              <label>
+                Daily Salary
+                <input id="employeeProfileDailySalary" type="number" min="0" step="0.01" placeholder="0.00" required />
+              </label>
+              <label>
+                Salary Month
+                <input id="employeeProfileSalaryMonth" type="month" required />
+              </label>
+            </div>
+            <div class="grid three admin-form-grid">
+              <label>
+                Notes
+                <input id="employeeProfileNotes" type="text" placeholder="Role, phone, address..." />
+              </label>
+            </div>
+            <div class="receipt-actions expense-actions">
+              <button id="employeeProfileSubmit" class="button accent" type="submit">Save Employee</button>
+              <button id="employeeProfileCancel" class="ghost-button" type="button">Cancel</button>
+            </div>
+          </form>
+          <form id="attendanceForm" class="stack ledger-entry-form">
+            <input id="attendanceId" type="hidden" />
+            <div class="grid three admin-form-grid">
+              <label>
+                Employee Name
+                <select id="attendanceEmployeeName" required>
+                  <option value="">Select employee</option>
+                </select>
+              </label>
+              <label>
+                Date
+                <input id="attendanceDate" type="date" required />
+              </label>
+              <label>
+                Attendance
+                <select id="attendanceStatus">
+                  <option value="Present">Present</option>
+                  <option value="Half Day">Half Day</option>
+                  <option value="Absent">Absent</option>
+                  <option value="Paid Leave">Paid Leave</option>
+                </select>
+              </label>
+            </div>
+            <div class="grid three admin-form-grid">
+              <label>
+                Daily Salary
+                <input id="attendanceDailySalary" type="text" readonly />
+              </label>
+              <label>
+                Salary For Day
+                <input id="attendanceCalculatedSalary" type="text" readonly />
+              </label>
+              <label>
+                Notes
+                <input id="attendanceNotes" type="text" placeholder="Late, overtime, leave reason..." />
+              </label>
+            </div>
+            <div class="receipt-actions expense-actions">
+              <button id="attendanceSubmit" class="button accent" type="submit">Save Attendance</button>
+              <button id="attendanceCancelEdit" class="ghost-button" type="button" hidden>Cancel Edit</button>
+            </div>
+          </form>
+          <div id="attendanceSummary" class="admin-grid"></div>
+          <div id="attendanceEntries" class="report-table-wrap"></div>
+        </section>
+      </section>
+    </div>
+
+    <script src="db.js"></script>
+    <script src="ledger.js"></script>
+  </body>
+</html>

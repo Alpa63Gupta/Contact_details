@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reports | Sweet Shop POS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="transfer-layout report-page">
+      <section class="panel transfer-shell report-shell">
+        <div class="section-header report-toolbar">
+          <div>
+            <p class="eyebrow">POS Reports</p>
+            <h1>Sales & Expense Report</h1>
+          </div>
+          <div class="receipt-actions expense-actions report-actions">
+            <button id="printReport" class="button accent" type="button">Print Report</button>
+            <a
+              class="ghost-button transfer-link"
+              href="#"
+              onclick="if (window.history.length > 1) { window.history.back(); } else { window.location.href = 'index.html'; } return false;"
+            >Back To POS</a>
+          </div>
+        </div>
+
+        <form id="reportFilters" class="report-filter-bar">
+          <label>
+            From Date
+            <input id="reportFromDate" type="date" />
+          </label>
+          <label>
+            To Date
+            <input id="reportToDate" type="date" />
+          </label>
+          <button class="button" type="submit">Show Report</button>
+          <button id="clearReportDates" class="ghost-button" type="button">Today</button>
+        </form>
+
+        <div id="reportSummary" class="stats report-stats"></div>
+
+        <section class="catalog-section report-section">
+          <div class="section-header">
+            <h2>Total Sale Breakdown</h2>
+          </div>
+          <div id="salesBreakdown" class="admin-grid"></div>
+        </section>
+
+        <section class="catalog-section report-section">
+          <div class="section-header">
+            <h2>Each Item Quantity Sold</h2>
+          </div>
+          <div id="itemQuantityReport" class="report-table-wrap"></div>
+        </section>
+
+        <section class="catalog-section report-section">
+          <div class="section-header">
+            <h2>Total Expense Details</h2>
+          </div>
+          <div id="expenseDetailsReport" class="report-table-wrap"></div>
+        </section>
+
+        <section class="catalog-section report-section">
+          <div class="section-header">
+            <h2>Bill Details</h2>
+          </div>
+          <div id="billDetailsReport" class="report-table-wrap"></div>
+        </section>
+      </section>
+    </div>
+
+    <script src="db.js"></script>
+    <script src="reports.js"></script>
+  </body>
+</html>
